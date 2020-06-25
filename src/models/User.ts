@@ -9,7 +9,7 @@ import {
 // Esta me diz que vai ser algo que vai ser salvo no banco de dados
 
 // @Entity('appointments') passo o appointments q é nome da tabela
-@Entity('appointments') // O decoratior funciona como se fosse uma função, e como paramentro da função ele envia a classe abaixo dele como um Paramento
+@Entity('users') // O decoratior funciona como se fosse uma função, e como paramentro da função ele envia a classe abaixo dele como um Paramento
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -24,11 +24,9 @@ class User {
   password: string;
 
   @CreateDateColumn()
-  // eslint-disable-next-line camelcase
   created_at: Date;
 
   @UpdateDateColumn()
-  // eslint-disable-next-line camelcase
   updated_at: Date;
 }
 

@@ -7,12 +7,12 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 interface Request {
   // DTO
-  provider: string;
+  provider_id: string;
   date: Date;
 }
 
 class CreateAppointmentService {
-  public async exceute({ date, provider }: Request): Promise<Appointment> {
+  public async exceute({ date, provider_id }: Request): Promise<Appointment> {
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
     // Apartir disto agora o appointmentsRepository tem todos os metodos, Create,Delete,... para ser executado
 
@@ -28,7 +28,7 @@ class CreateAppointmentService {
 
     // Cria a instancia mais não salva no banco por esta motivo tenho que usar o save() abaixo
     const appointment = appointmentsRepository.create({
-      provider,
+      provider_id,
       date: appointmentDate,
     });
 
