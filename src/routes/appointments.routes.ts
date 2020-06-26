@@ -5,11 +5,16 @@ import { parseISO } from 'date-fns';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
 const appointmentsRouter = Router();
 
 // SoC: Separation of Concerns (Separação de preocupações)
 
 // DTO Data Transfer Object
+
+// Como todas as rotas (get,post, ...) precisam de autenticação, passa o com USE para todas as rotas atraves do appointmentsRouter
+appointmentsRouter.use(ensureAuthenticated);
 
 appointmentsRouter.get('/', async (request, response) => {
   const appointmentsRepository = getCustomRepository(AppointmentsRepository);
