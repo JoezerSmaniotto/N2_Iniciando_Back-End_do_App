@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 
 import Appointment from '../models/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import AppError from '../errors/AppError';
 // import appointmentsRouter from '../routes/appointments.routes';
 
 interface Request {
@@ -23,7 +24,7 @@ class CreateAppointmentService {
     );
 
     if (findAppointmentInSameDate) {
-      throw Error('This appointment is already booked');
+      throw new AppError('This appointment is already booked'); // Aqui não passo statusCode pq quero quer de default ele use o status 400 da classe AppError
     }
 
     // Cria a instancia mais não salva no banco por esta motivo tenho que usar o save() abaixo

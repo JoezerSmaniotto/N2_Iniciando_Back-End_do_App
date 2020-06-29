@@ -11,21 +11,21 @@ const usersRouter = Router();
 const upload = multer(UploadConfig); // O upload é uma instancia do multer nele eu tenho acesso alguns metodos
 
 usersRouter.post('/', async (request, response) => {
-  try {
-    const { name, email, password } = request.body;
+  // try {
+  const { name, email, password } = request.body;
 
-    const createUser = new CreateUserService();
+  const createUser = new CreateUserService();
 
-    const user = await createUser.execute({
-      name,
-      email,
-      password,
-    });
+  const user = await createUser.execute({
+    name,
+    email,
+    password,
+  });
 
-    return response.json(user);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
+  return response.json(user);
+  // } catch (err) {
+  return response.status(400).json({ error: err.message });
+  // }
 });
 
 // Uso o ensureAuthenticated para ver se o usuario esta autenticado, caso que não acontece na rota acima pq ali ele estara logando
@@ -34,19 +34,19 @@ usersRouter.patch(
   ensureAuthenticated,
   upload.single('avatar'), // Aqui upload.single('avatar') acaba funcionando como um middleware, e no campo  avatar é nome do campo aonde estará minha imagem de upload
   async (request, response) => {
-    try {
-      const updateUserService = new UpdateUserAvatarService();
+    // try {
+    const updateUserService = new UpdateUserAvatarService();
 
-      const user = await updateUserService.execute({
-        user_id: request.user.id,
-        avatarFilename: request.file.filename,
-      });
-      // delete user.password;
+    const user = await updateUserService.execute({
+      user_id: request.user.id,
+      avatarFilename: request.file.filename,
+    });
+    // delete user.password;
 
-      return response.json({ user });
-    } catch (err) {
-      return response.status(400).json({ error: err.message });
-    }
+    return response.json({ user });
+    // } catch (err) {
+    return response.status(400).json({ error: err.message });
+    // }
   },
 );
 

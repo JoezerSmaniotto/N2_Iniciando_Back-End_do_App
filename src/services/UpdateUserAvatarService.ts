@@ -1,8 +1,10 @@
 import { getRepository } from 'typeorm'; // ok
 import path from 'path'; // Ok
 import fs from 'fs'; // ok
-
 import uploadConfig from '../config/upload'; // ok
+
+import AppError from '../errors/AppError'; // ok
+
 import User from '../models/User'; // ok
 
 interface Request {
@@ -17,7 +19,7 @@ class UpdateUserAvatarService {
     const user = await usersRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('Only authenticated users can change avatar.');
+      throw new AppError('Only authenticated users can change avatar.', 401);
     }
 
     // Aqui é se o user Já tem um avatar então tenho que fazer um D E L E T E do A V A T A R anterior

@@ -1,8 +1,10 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs'; // Senha criptografada
 import { sign } from 'jsonwebtoken';
-
 import authConfig from '../config/auth';
+
+import AppError from '../errors/AppError';
+
 import User from '../models/User';
 
 interface Resquest {
@@ -22,7 +24,7 @@ class AuthenticateUserService {
     const user = await usersRepository.findOne({ where: { email } });
 
     if (!user) {
-      throw new Error('Incorrect email/password combination.');
+      throw new AppError('Incorrect email/password combination.', 401);
     }
 
     // user.password - Senha criptografada
@@ -31,7 +33,7 @@ class AuthenticateUserService {
     const passwordMatched = await compare(password, user.password); // O Compare compara senha uma criptografa com uma não criptografada retornano um boolean
 
     if (!passwordMatched) {
-      throw new Error('Incorrect email/password combination.');
+      throw new AppError('Incorrect email/password combination.', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

@@ -3,6 +3,8 @@ import { verify } from 'jsonwebtoken';
 
 import authConfig from '../config/auth';
 
+import AppError from '../errors/AppError'; // ok
+
 interface TokenPayload {
   iat: number;
   exp: number;
@@ -17,7 +19,7 @@ export default function ensureAuthenticated(
   //  Verifica se tem token JWT, se ele foi enviado pelo header
   const authHeader = request.headers.authorization;
   if (!authHeader) {
-    throw new Error('JTW token missing');
+    throw new AppError('JTW token missing', 401);
   }
 
   // Caso tenha o token
@@ -41,6 +43,6 @@ export default function ensureAuthenticated(
 
     return next();
   } catch (error) {
-    throw new Error('Invalid JTW token');
+    throw new AppError('Invalid JTW token', 401);
   }
 }
