@@ -12,7 +12,19 @@ const upload = multer(UploadConfig); // O upload é uma instancia do multer nele
 
 usersRouter.post('/', async (request, response) => {
   // try {
-  const { name, email, password } = request.body;
+  const {
+    name,
+    email,
+    password,
+    birthDate,
+    cep,
+    street,
+    number,
+    complement,
+    district,
+    city,
+    UF,
+  } = request.body;
 
   const createUser = new CreateUserService();
 
@@ -20,6 +32,14 @@ usersRouter.post('/', async (request, response) => {
     name,
     email,
     password,
+    birthDate,
+    cep,
+    street,
+    number,
+    complement,
+    district,
+    city,
+    UF,
   });
 
   return response.json(user);
@@ -35,13 +55,15 @@ usersRouter.patch(
   upload.single('avatar'), // Aqui upload.single('avatar') acaba funcionando como um middleware, e no campo  avatar é nome do campo aonde estará minha imagem de upload
   async (request, response) => {
     // try {
+    // console.log(request.file);
     const updateUserService = new UpdateUserAvatarService();
 
     const user = await updateUserService.execute({
       user_id: request.user.id,
       avatarFilename: request.file.filename,
     });
-    // delete user.password;
+
+    delete user.password;
 
     return response.json({ user });
     // } catch (err) {

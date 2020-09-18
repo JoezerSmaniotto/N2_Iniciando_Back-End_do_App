@@ -1,11 +1,11 @@
-import { getRepository } from 'typeorm'; // ok
-import path from 'path'; // Ok
-import fs from 'fs'; // ok
-import uploadConfig from '../config/upload'; // ok
+import { getRepository } from 'typeorm';
+import path from 'path';
+import fs from 'fs';
+import uploadConfig from '../config/upload';
 
-import AppError from '../errors/AppError'; // ok
+import AppError from '../errors/AppError';
 
-import User from '../models/User'; // ok
+import User from '../models/User';
 
 interface Request {
   user_id: string;
@@ -27,7 +27,7 @@ class UpdateUserAvatarService {
       // Se o metodo usersRepository.findOne(user_id); funcionou, ele me retorno o User com tudo o que ele tem, se já tiver avatar tenho q deletar
 
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar); // Aqui junto o camiho para a foto com o nome da foto que estava armazenado no banco de dados
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath); // a Função stat trás o S TA T U S de um arquivo S Ó  se ele E X I S T I R,
+      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath); // a Função stat trás o S T A T U S de um arquivo S Ó  se ele E X I S T I R,
       // => fs.promises = o promises faz com que possa usar  as funções do FileSistem em forma de promises e não Callback, desta forma sendo possivel usar o await para aguardar o resultado
 
       // Se tenho então a foto deleto

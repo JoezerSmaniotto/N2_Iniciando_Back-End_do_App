@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {
   Entity,
   Column,
@@ -25,6 +26,30 @@ class User {
 
   @Column()
   avatar: string;
+
+  @Column()
+  birthDate: Date;
+
+  @Column()
+  cep: string;
+
+  @Column()
+  street: string;
+
+  @Column()
+  number: string;
+
+  @Column()
+  complement: string;
+
+  @Column()
+  district: string;
+
+  @Column()
+  city: string;
+
+  @Column()
+  UF: string;
 
   @CreateDateColumn()
   created_at: Date;

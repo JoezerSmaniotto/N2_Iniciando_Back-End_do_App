@@ -9,13 +9,33 @@ interface Resquest {
   name: string;
   email: string;
   password: string;
+  birthDate: Date;
+  cep: string;
+  street: string;
+  number: string;
+  complement: string;
+  district: string;
+  city: string;
+  UF: string;
 }
 
 class CreateUserService {
-  public async execute({ name, email, password }: Resquest): Promise<User> {
-    const userRepository = getRepository(User);
+  public async execute({
+    name,
+    email,
+    password,
+    birthDate,
+    cep,
+    street,
+    number,
+    complement,
+    district,
+    city,
+    UF,
+  }: Resquest): Promise<User> {
+    const usersRepository = getRepository(User);
 
-    const checkUserExists = await userRepository.findOne({
+    const checkUserExists = await usersRepository.findOne({
       where: { email }, // email: email
     });
 
@@ -25,13 +45,22 @@ class CreateUserService {
 
     const hashedPassword = await hash(password, 8); // Senha criptografada
 
-    const user = userRepository.create({
+    const user = usersRepository.create({
       name,
       email,
       password: hashedPassword,
+
+      birthDate,
+      cep,
+      street,
+      number,
+      complement,
+      district,
+      city,
+      UF,
     });
 
-    await userRepository.save(user);
+    await usersRepository.save(user);
 
     delete user.password; // Assim não retorno a senha do usuario criado
 

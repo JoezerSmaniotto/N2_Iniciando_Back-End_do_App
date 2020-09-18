@@ -37,13 +37,13 @@ class AuthenticateUserService {
     }
 
     const { secret, expiresIn } = authConfig.jwt;
-    // No metodo SING assinatura coloco algumas coisas
+    // No metodo SIGN assinatura coloco algumas coisas
     // 1º Coisas que posso passar do usuario, nome ou permissões para usar depois => payload não é seguro posso pasar NUNCA PASSAR SENHA
     // 2º Chave secreta MD5online para gerar
     // 3º Configurações do token, posso passar o id do usuario=> subject, tempo que vai ficar valida a sessão =>expiresIn
     const token = sign({}, secret, {
       subject: user.id, // iD RETORNA DAQUI SE estiver logado  const user = await usersRepository.findOne({ where: { email } });
-      expiresIn, // expiresIn: expiresIn
+      expiresIn, // expiresIn: expiresIn Tempo para ficar logado, estamos usando  1D
     });
 
     // Se chegou ate aqui o usuario esta autenticado

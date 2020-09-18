@@ -16,7 +16,7 @@ export default function ensureAuthenticated(
   response: Response,
   next: NextFunction,
 ): void {
-  //  Verifica se tem token JWT, se ele foi enviado pelo header
+  //  Verifica se tem token JWT, se ele foi enviado pelo header da requisão
   const authHeader = request.headers.authorization;
   if (!authHeader) {
     throw new AppError('JTW token missing', 401);
@@ -28,7 +28,7 @@ export default function ensureAuthenticated(
   const [, token] = authHeader.split(' '); // como não quero o Bearer deixo em branco seu campo como posso ver [, token], pego apenas a segunda posição via desestruturação
 
   try {
-    const decode = verify(token, authConfig.jwt.secret); // Aqui passo o token e a  secret para seuver se esta tudo ok, SE SIM retorno as informações já PRONTAS decodificadas
+    const decode = verify(token, authConfig.jwt.secret); // Aqui passo o token e a  secret para saber se esta tudo ok, SE SIM retorno as informações do token já PRONTAS decodificadas
     // neste decode irá estar decodificado e posso encontrar o sub que é o ID do usuário
 
     // Se passar o mouse sobre o decode, o retono na autenticação ele não sabe o formato q ele vai ter, ele pode ser de qualquer tipo, com as informações postas para gerar o token
